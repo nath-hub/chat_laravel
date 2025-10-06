@@ -20,25 +20,25 @@ class ViewController extends Controller
 
         $cards = [
             [
-                "icon" => "",
+                "icon" => "mdi-scale-balance",
                 "titre" => "Expertise juridique",
                 "test" => "Réponses basées sur le droit français et la jurisprudence actuelle",
                 "color" => "#FDE68A"
             ],
             [
-                "icon" => "",
+                "icon" => "mdi-clock-time-four-outline",
                 "titre" => "Réponses instantanées",
                 "test" => "Obtenez des réponses précises en quelques secondes",
                 "color" => "#FDE68A"
             ],
             [
-                "icon" => "",
+                "icon" => "mdi-shield-check-outline",
                 "titre" => "Confidentialité totale",
                 "test" => "Vos conversations sont privées et sécurisées",
                 "color" => "#FDE68A"
             ],
             [
-                "icon" => "",
+                "icon" => "mdi-face-agent",
                 "titre" => "Support 24/7",
                 "test" => "Assistance juridique disponible à tout moment",
                 "color" => "#FDE68A"

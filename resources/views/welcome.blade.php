@@ -43,7 +43,7 @@
                         <div class="feature-card">
                             <div class="icon-container">
                                 <i class="mdi {{ $card['icon'] }}"
-                                    style="font-size: 40px; color: {{ $card['color'] }};"></i>
+                                    style="font-size: 40px; color: var(--primary-color);"></i>
                             </div>
                             <h2 class="card-title">{{ $card['titre'] }}</h2>
                             <div class="card-text">{{ $card['test'] }}</div>
@@ -57,6 +57,7 @@
         <div class="main-cta-wrapper">
             <div class="main-cta-card">
                 <div class="cta-card-content">
+
                     <h2 class="cta-title">Commencez dès maintenant</h2>
                     <p class="cta-description">
                         Posez vos questions juridiques et obtenez des réponses expertes instantanément.
@@ -66,22 +67,22 @@
                 <div class="cta-actions">
                     <div class="cta-content">
 
-                        <a href="{{ session('user_id') ? route('home') : route('login_get') }}" class="btn-primary">
+                        <a href="{{ session('user_id') ? route('home') : route('login_get') }}" style="background-color: var(--primary-color)" class="btn-primary">
                             <i class="mdi mdi-chat-processing"></i>
                             Démarrer le chat
                         </a>
 
                         <div class="features-list">
                             <div class="feature-item">
-                                <i class="mdi mdi-check"></i>
+                                <i  style="color: var(--primary-color)" class="mdi mdi-check"></i>
                                 <span>1 mois gratuit</span>
                             </div>
                             <div class="feature-item">
-                                <i class="mdi mdi-check"></i>
+                                <i  style="color: var(--primary-color)" class="mdi mdi-check"></i>
                                 <span>Sans engagement</span>
                             </div>
                             <div class="feature-item">
-                                <i class="mdi mdi-check"></i>
+                                <i  style="color: var(--primary-color)" class="mdi mdi-check"></i>
                                 <span>Questions illimitées</span>
                             </div>
                         </div>
