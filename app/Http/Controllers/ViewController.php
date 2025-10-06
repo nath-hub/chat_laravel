@@ -8,6 +8,7 @@ use App\Models\ChatMessage;
 use App\Models\Conversation;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Nette\Utils\Random;
@@ -95,8 +96,22 @@ class ViewController extends Controller
 
     public function verify(Request $request)
     {
+        $id = session('user_id');
+
+        $messages = ChatMessage::where('user_id', $id)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        $conversationId = $messages->first()->conversation_id ?? null;
+
+        $activeConversationId = $conversationId;
+
+        $conversations = Conversation::where('user_id', session('user_id'))->get();
+
+        $user = null;
+
         $email = $request->query('email'); // Récupère depuis l’URL
-        return view('verify', compact('email'));
+        return view('verify', compact('email', 'messages', 'conversations', 'conversationId', 'activeConversationId', 'user'));
     }
 
 
@@ -161,7 +176,7 @@ class ViewController extends Controller
 
         $conversationId = $messages->first()->conversation_id ?? null;
 
-         $activeConversationId = $conversationId;
+        $activeConversationId = $conversationId;
 
 
         $suggestions = [
@@ -190,7 +205,7 @@ class ViewController extends Controller
 
     public function profil()
     {
-          $id = session('user_id');
+        $id = session('user_id');
 
         $messages = ChatMessage::where('user_id', $id)
             ->orderBy('created_at', 'asc')
@@ -198,18 +213,18 @@ class ViewController extends Controller
 
         $conversationId = $messages->first()->conversation_id ?? null;
 
-         $activeConversationId = $conversationId;
+        $activeConversationId = $conversationId;
 
-         $conversations = Conversation::where('user_id', session('user_id'))->get();
+        $conversations = Conversation::where('user_id', session('user_id'))->get();
 
         $user = User::find('286c9c52-d70a-4f5e-9c43-38ef8275bbc7');
-        return view('profil', compact('user', 'conversations', 'activeConversationId',  'conversationId', 'messages'));
+        return view('profil', compact('user', 'conversations', 'activeConversationId', 'conversationId', 'messages'));
     }
 
 
     public function abonnement()
     {
-         $id = session('user_id');
+        $id = session('user_id');
 
         $messages = ChatMessage::where('user_id', $id)
             ->orderBy('created_at', 'asc')
@@ -217,12 +232,12 @@ class ViewController extends Controller
 
         $conversationId = $messages->first()->conversation_id ?? null;
 
-         $activeConversationId = $conversationId;
+        $activeConversationId = $conversationId;
 
-         $conversations = Conversation::where('user_id', session('user_id'))->get();
+        $conversations = Conversation::where('user_id', session('user_id'))->get();
 
         $user = User::find('286c9c52-d70a-4f5e-9c43-38ef8275bbc7');
-        return view('abonnement', compact('user', 'conversations', 'activeConversationId',  'conversationId', 'messages'));
+        return view('abonnement', compact('user', 'conversations', 'activeConversationId', 'conversationId', 'messages'));
     }
 
 
@@ -230,13 +245,15 @@ class ViewController extends Controller
     {
         $conversations = Conversation::where('user_id', session('user_id'))->get();
 
-         $activeConversationId = $id;
+        $conversation = Conversation::findOrFail($id);
 
-         $messages = ChatMessage::where('conversation_id', $id)
+        $activeConversationId = $conversation->id;
+
+        $messages = ChatMessage::where('conversation_id', $conversation->id)
             ->orderBy('created_at', 'asc')
             ->get();
 
-               $suggestions = [
+        $suggestions = [
             [
                 "text" => "Comment puis-je protéger mes droits d'auteur ?",
                 'short' => "Comment protéger mes droits d'auteur ?"
@@ -252,6 +269,25 @@ class ViewController extends Controller
         ];
 
         return view('home', compact('conversations', 'activeConversationId', 'messages', 'suggestions', 'id'));
+    }
+
+
+    public function toggle(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            // Bascule entre clair et sombre
+            $user->theme = $user->theme === 'dark' ? 'light' : 'dark';
+            $user->save();
+        } else {
+            // Si aucun utilisateur connecté, on stocke le thème en session
+            $current = session('theme', 'light');
+            session(['theme' => $current === 'dark' ? 'light' : 'dark']);
+        }
+
+        // Recharge la page pour appliquer le changement
+        return back();
     }
 
 }

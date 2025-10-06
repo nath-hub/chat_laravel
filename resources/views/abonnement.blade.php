@@ -440,7 +440,7 @@
 </div>
 
 <style>
-:root {
+/* :root {
     --primary-color: #7c3aed;
     --primary-hover: #6d28d9;
     --success-color: #10b981;
@@ -448,7 +448,7 @@
     --warning-color: #f59e0b;
     --gradient-start: #7c3aed;
     --gradient-end: #ec4899;
-}
+} */
 
 .subscription-page {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -456,7 +456,7 @@
 }
 
 .subscription-header {
-    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
     color: white;
     font-size: 10px;
 }
@@ -652,7 +652,7 @@
     position: absolute;
     top: -12px;
     right: 20px;
-    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
     color: white;
     padding: 6px 20px;
     border-radius: 20px;

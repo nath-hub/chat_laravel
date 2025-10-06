@@ -10,13 +10,14 @@
     <title>Connexion</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css">
 
+    <link rel="stylesheet" href="{{ asset('app.css') }}">
 
     <!-- ✅ Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Optionnel : icônes Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
         * {
@@ -27,7 +28,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+            background: var(--primary-color);
+
+
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -78,7 +81,7 @@
             height: 60px;
             border-radius: 15px;
             background-color: white;
-            color: #6a1b9a;
+            color: var(--primary-color);
             border: 2px solid #e0e0e0;
             display: flex;
             align-items: center;
@@ -92,7 +95,7 @@
 
         .btn-google:hover {
             background-color: #f5f5f5;
-            border-color: #6a1b9a;
+            border-color: var(--primary-color);
         }
 
         .google-icon {
@@ -113,18 +116,34 @@
             font-size: 14px;
         }
 
-        .input-wrapper {
-            position: relative;
-        }
-
         .input-icon {
             position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
             color: #6a1b9a;
             font-size: 20px;
         }
+
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper .icon {
+            position: absolute;
+            left: 10px;
+            color: #181616;
+            font-size: 26px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 10px 10px 10px 35px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
 
         input[type="text"],
         input[type="email"] {
@@ -140,7 +159,7 @@
 
         input[type="text"]:focus,
         input[type="email"]:focus {
-            border-color: #6a1b9a;
+            border-color: var(--primary-light);
             box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.1);
         }
 
@@ -148,7 +167,7 @@
             width: 100%;
             height: 60px;
             border-radius: 15px;
-            background-color: #6a1b9a;
+            background-color: var(--primary-color);
             color: white;
             border: none;
             font-size: 16px;
@@ -254,15 +273,17 @@
     <div class="card">
         <!-- Header -->
         <div class="header-logo">
-            <img src="./logo.jpg" alt="Logo" class="logo-img" />
+            <img src="{{ asset('logo.jpg') }}" alt="Logo" class="logo-img" />
         </div>
 
         <h1>Connexion</h1>
         <p class="subtitle">Accédez à votre espace sécurisé</p>
 
+
+
         <!-- Google Button -->
         <button type="button" class="btn-google">
-            <img src="./google-icon.png" alt="Google" class="google-icon" />
+            <img src="{{ asset('google-icon.png') }}" alt="Google" class="google-icon" />
             Continuer avec Google
         </button>
 
@@ -288,19 +309,22 @@
             <div class="form-group">
                 <label for="username">Username</label>
                 <div class="input-wrapper">
-                    <span class="input-icon icon-account"></span>
-                    <input type="text" id="username" name="username" placeholder="Entrer votre nom d'utilisateur" value="{{ old('username') }}" required />
+                    <span class="fa fa-user icon"></span>
+                    <input type="text" id="username" name="username" placeholder="Entrer votre nom d'utilisateur"
+                        value="{{ old('username') }}" required />
                 </div>
                 @error('username')
                     <small style="color: #d32f2f;">{{ $message }}</small>
                 @enderror
             </div>
 
+
             <div class="form-group">
                 <label for="email">Email</label>
                 <div class="input-wrapper">
-                    <span class="input-icon icon-email"></span>
-                    <input type="email" id="email" name="email" placeholder="Entrer votre email" value="{{ old('email') }}" required />
+                    <span class="fa-solid fa-envelope icon"></span>
+                    <input type="email" id="email" name="email" placeholder="Entrer votre email"
+                        value="{{ old('email') }}" required />
                 </div>
                 @error('email')
                     <small style="color: #d32f2f;">{{ $message }}</small>

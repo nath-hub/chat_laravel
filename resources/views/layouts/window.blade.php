@@ -5,8 +5,15 @@
         flex-direction: column;
         height: 100vh;
         width: 100%;
-        margin-left: 250px;
-        /* Largeur du menu de navigation */
+        margin-left: 300px;
+        transition: margin-left 0.3s ease;
+    }
+
+    /* Adaptation pour le menu rail (mode icônes) sur desktop */
+    @media (min-width: 769px) {
+        .navigation-drawer.rail~.main-content .app-shell {
+            margin-left: 72px;
+        }
     }
 
     .app-bar {
@@ -15,14 +22,14 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 20px;
-        background-color: var(--surface-color, #ffffff);
+        background-color: var(--surface-color);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         position: fixed;
         top: 0;
         left: 300px;
-        /* Largeur du menu de navigation */
         right: 0;
-        z-index: 999;
+        z-index: 998;
+        transition: left 0.3s ease;
     }
 
     .app-bar-title {
@@ -113,15 +120,16 @@
     }
 
     .chat-area {
-        flex: 1.5;
+        flex: 1;
         display: flex;
         flex-direction: column;
-        background-color: var(--background-color, #f5f5f5);
+        background-color: var(--background-color);
         color: var(--text-color, #000000);
         margin-top: 80px;
-        margin-right: 200px;
-        /* margin-left: 20px; */
         overflow: hidden;
+        margin-right: 300px;
+        overflow: hidden;
+        max-width: 4000px;
     }
 
     .chat-wrapper {
@@ -131,11 +139,11 @@
         max-width: 1200px;
         width: 100%;
         margin: 0 auto;
-        background-color: #ffffff;
+        background-color: var(--surface-color);
         border-left: 1px solid #e0e0e0;
         border-right: 1px solid #e0e0e0;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-        overflow: hidden;
+        overflow-y: auto;
     }
 
     .message-container {
@@ -311,9 +319,9 @@
     }
 
     .message.user .bubble {
-        background: #1976d2;
+        background: var(--primary-light);
         color: #ffffff;
-        border-color: #1976d2;
+        border-color: var(--primary-light);
     }
 
     .message.user .meta {
@@ -321,13 +329,13 @@
     }
 
     .message.assistant .bubble {
-        background: #ffffff;
+        background: var(--background-color);
         color: #000000;
         border-color: #cccccc;
     }
 
     .message.system .bubble {
-        background: #f5f5f5;
+        background: var(--background-color);
         color: #666666;
         border-color: #e0e0e0;
         font-style: italic;
@@ -345,7 +353,7 @@
         border: 1px solid #cccccc;
         border-radius: 9999px;
         color: #000000;
-        background: #f5f5f5;
+        background: var(--primary-lighter);
         text-transform: none;
         cursor: pointer;
         font-size: 14px;
@@ -353,7 +361,7 @@
     }
 
     .suggestion-btn:hover {
-        background-color: #e0e0e0;
+        background-color: var(--primary-over);
     }
 
     #chatTextarea {
@@ -379,7 +387,7 @@
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        background-color: #1976d2;
+        background-color: var(--primary-color);
         color: #ffffff;
         border: none;
         display: flex;
@@ -388,10 +396,11 @@
         cursor: pointer;
         font-size: 24px;
         transition: background-color 0.3s;
+        flex-shrink: 0;
     }
 
     .send-button:hover:not(:disabled) {
-        background-color: #1565c0;
+        background-color: var(--primary-color);
     }
 
     .send-button:disabled {
@@ -415,28 +424,54 @@
         }
     }
 
-    /* Responsive Design */
+    /* Responsive Mobile (≤ 768px) */
     @media (max-width: 768px) {
         .app-shell {
             margin-left: 0;
+            width: 100%;
         }
 
         .app-bar {
             left: 0;
+            right: 0;
+            padding: 0 12px;
+            height: 70px;
         }
+
+        .chat-area {
+            margin-top: 70px;
+            margin-right: 0;
+        }
+
 
         .chat-wrapper {
-            border-left: none;
-            border-right: none;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            width: 100%;
+             padding: 12px;
+            margin: 0 auto;
+            background-color: var(--background-color);
+            border-left: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            overflow-y: auto;
+            /* ✅ permet le scroll vertical */
+            overflow-x: hidden;
         }
 
-        .message-container {
-            padding: 16px;
+
+        .header {
+            padding-left: 8px;
+            padding-top: 8px;
+            gap: 12px;
         }
 
         .header-logo .logo-img {
             width: 50px;
             height: 50px;
+            border-width: 2px;
         }
 
         .d-none-xs {
@@ -445,6 +480,10 @@
 
         .ml-2-xs {
             margin-left: 8px !important;
+        }
+
+        .ml-12 {
+            margin-left: 8px;
         }
 
         .header-text h3 {
@@ -457,31 +496,111 @@
 
         .bubble {
             max-width: 85%;
+            padding: 10px;
+        }
+
+        .avatar {
+            width: 28px;
+            height: 28px;
+            margin: 0 6px;
+        }
+
+        .chat-input {
+            padding: 12px;
+            gap: 10px;
+        }
+
+        .suggestions-row {
+            gap: 6px;
+        }
+
+        .suggestion-btn {
+            padding: 5px 10px;
+            font-size: 13px;
+        }
+
+        #chatTextarea {
+            min-height: 50px;
+            font-size: 13px;
+            padding: 10px;
+        }
+
+        .send-button {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+
+        .icon-btn {
+            padding: 6px;
+        }
+
+        .icon-btn i {
+            font-size: 20px;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        .meta {
+            font-size: 10px;
         }
     }
 
+    /* Tablette (769px - 1024px) */
     @media (min-width: 769px) and (max-width: 1024px) {
         .app-shell {
-            margin-left: 200px;
-            /* Menu plus petit sur tablette */
+            margin-left: 300px;
         }
 
         .app-bar {
-            left: 200px;
+            left: 300px;
         }
 
         .chat-wrapper {
             max-width: 900px;
         }
+
+        .bubble {
+            max-width: 75%;
+        }
+    }
+
+    /* Desktop large (> 1024px) */
+    @media (min-width: 1025px) {
+        .app-shell {
+            margin-left: 300px;
+        }
+
+        .app-bar {
+            left: 300px;
+        }
+    }
+
+    /* Ajustement dynamique pour le menu en mode rail sur desktop */
+    @media (min-width: 769px) {
+        body:has(.navigation-drawer.rail) .app-shell {
+            margin-left: 72px;
+        }
+
+        body:has(.navigation-drawer.rail) .app-bar {
+            left: 52px;
+        }
     }
 </style>
+
 <div class="app-shell">
     <!-- App Bar / Header -->
     <header class="app-bar">
         <div class="app-bar-title">
             <div class="header fade-slide-enter">
                 <div class="header-logo">
-                    <img src="{{ asset('./logo.jpg') }}" alt="Logo" class="logo-img" />
+                    <img src="{{ asset('logo.jpg') }}" alt="Logo" class="logo-img" />
                 </div>
                 <div class="header-text d-none-xs">
                     <h3>Legal Chat IA</h3>
@@ -515,61 +634,58 @@
     <!-- Main Chat Area -->
     <main class="chat-area">
         <div class="chat-wrapper">
-                <div class="message-container" data-conversation-id="{{ $conversationId ?? '' }}">
+            <input type="hidden" id="activeConversationId" value="{{ $activeConversationId }}">
 
-
-                <!-- Messages existants depuis le contrôleur -->
-                @forelse($messages ?? [] as $msg)
- 
-                    @if ($msg['role'] === 'user')
-                        <div class="message user">
-                            <div class="bubble">
-                                <div>{!! nl2br(e($msg['message'])) !!}</div>
-                                <div class="meta right">{{ \Carbon\Carbon::parse($msg['created_at'])->format('H:i') }}
-                                </div>
-                            </div>
-                            <img class="avatar" src="{{ asset($user->avatar) }}" alt="Utilisateur" />
-                        </div>
-                    @elseif($msg['role'] === 'assistant')
-                        <div class="message assistant">
-                            <img class="avatar" src="{{ asset('./logo.jpg') }}" alt="Assistant" />
-                            <div class="bubble">
-                                <div>{!! nl2br(e($msg['message'])) !!}</div>
-                                <div class="meta">{{ \Carbon\Carbon::parse($msg['created_at'])->format('H:i') }}</div>
+            <!-- Messages existants depuis le contrôleur -->
+            @forelse($messages ?? [] as $msg)
+                @if ($msg['role'] === 'user')
+                    <div class="message user">
+                        <div class="bubble">
+                            <div>{!! nl2br(e($msg['message'])) !!}</div>
+                            <div class="meta right">{{ \Carbon\Carbon::parse($msg['created_at'])->format('H:i') }}
                             </div>
                         </div>
-                    @endif
-                @empty
-                    <div class="empty-state">
-                        <i class="mdi mdi-message-text-outline"></i>
-                        <p>Aucun message pour le moment</p>
-                        <p class="text-muted">Posez votre première question juridique</p>
+                        <img class="avatar" src="{{ asset($user->avatar) }}" alt="Utilisateur" />
                     </div>
-                @endforelse
+                @elseif($msg['role'] === 'assistant')
+                    <div class="message assistant">
+                        <img class="avatar" src="{{ asset('logo.jpg') }}" alt="Assistant" />
+                        <div class="bubble">
+                            <div>{!! nl2br(e($msg['message'])) !!}</div>
+                            <div class="meta">{{ \Carbon\Carbon::parse($msg['created_at'])->format('H:i') }}</div>
+                        </div>
+                    </div>
+                @endif
+
+            @empty
+                <div class="empty-state">
+                    <i class="mdi mdi-message-text-outline"></i>
+                    <p>Aucun message pour le moment</p>
+                    <p class="text-muted">Posez votre première question juridique</p>
+                </div>
+            @endforelse
+        </div>
+
+        <div class="chat-input">
+            <div class="suggestions-row">
+                @foreach ($suggestions ?? [] as $suggestion)
+                    <button class="suggestion-btn" onclick="pickSuggestion(this.getAttribute('data-question'))"
+                        data-question="{{ $suggestion['text'] }}" title="{{ $suggestion['text'] }}">
+                        {{ $suggestion['short'] }}
+                    </button>
+                @endforeach
             </div>
 
-            <div class="chat-input">
-                <div class="suggestions-row">
-                    @foreach ($suggestions ?? [] as $suggestion)
-                        <button class="suggestion-btn" onclick="pickSuggestion(this.getAttribute('data-question'))"
-                            data-question="{{ $suggestion['text'] }}" title="{{ $suggestion['text'] }}">
-                            {{ $suggestion['short'] }}
-                        </button>
-                    @endforeach
-                </div>
-
-                <div class="input-row">
-                    <textarea id="chatTextarea" placeholder="Écris ta question juridique..." onkeydown="handleEnter(event)"></textarea>
-                    <button id="sendBtn" class="send-button" onclick="sendMessage()" disabled>
-                        <i class="mdi mdi-send"></i>
-                    </button>
-                </div>
+            <div class="input-row">
+                <textarea id="chatTextarea" placeholder="Écris ta question juridique..." onkeydown="handleEnter(event)"></textarea>
+                <button id="sendBtn" class="send-button" onclick="sendMessage()" disabled>
+                    <i class="mdi mdi-send"></i>
+                </button>
             </div>
         </div>
-    </main>
 </div>
-
-
+</main>
+</div>
 
 <script>
     // Toggle dropdown menu
@@ -590,7 +706,7 @@
 
     // Scroll to bottom function
     function scrollToBottom() {
-        const container = document.querySelector('.message-container');
+        const container = document.querySelector('.chat-wrapper');
         if (container) {
             container.scrollTop = container.scrollHeight;
         }
@@ -651,7 +767,7 @@
         const messageDiv = document.createElement('div');
         messageDiv.className = 'message assistant';
         messageDiv.innerHTML = `
-            <img class="avatar" src="{{ asset('./logo.jpg') }}" alt="Assistant" />
+            <img class="avatar" src="{{ asset('logo.jpg') }}" alt="Assistant" />
             <div class="bubble">
                 <div class="loader">
                     <span></span><span></span><span></span>
@@ -691,7 +807,7 @@
             .replace(/\n/g, "<br>");
 
         messageDiv.innerHTML = `
-            <img class="avatar" src="{{ asset('./logo.jpg') }}" alt="Assistant" />
+            <img class="avatar" src="{{ asset('logo.jpg') }}" alt="Assistant" />
             <div class="bubble">
                 <div>${escapedContent}</div>
                 <div class="meta">${formatTime(timestamp)}</div>
@@ -702,8 +818,7 @@
 
     // Get conversation ID from the page
     function getConversationId() {
-        // Try to get from data attribute on message container
-        const container = document.querySelector('.message-container');
+        const container = document.querySelector('.chat-wrapper');
         return container?.dataset.conversationId || null;
     }
 
@@ -711,13 +826,17 @@
     async function sendMessage() {
         const textarea = document.getElementById('chatTextarea');
         const message = textarea.value.trim();
+        const conversationIdInput = document.getElementById('activeConversationId');
+        const conversationId = conversationIdInput.value;
+
+        console.log('Sending message to conversation ID:', conversationId);
 
         if (!message) return;
 
-        const container = document.querySelector('.message-container');
-        const conversationId = getConversationId();
 
-        console.log('Current conversation ID:', conversationId);
+        const container = document.querySelector('.chat-wrapper');
+
+
 
         // Remove empty state if present
         const emptyState = container.querySelector('.empty-state');

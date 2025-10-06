@@ -221,19 +221,7 @@
 </div>
 
 <style>
-:root {
-    --primary-color: #7c3aed;
-    --primary-hover: #6d28d9;
-    --success-color: #10b981;
-    --danger-color: #ef4444;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
-    --bg-light: #f9fafb;
-    --border-color: #e5e7eb;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
+
 
 .settings-page {
     min-height: 100vh;
@@ -645,7 +633,7 @@
 }
 
 .btn-danger-action {
-    background-color: var(--danger-color);
+    background-color: var(--accent-color);
     color: white;
     border: none;
     padding: 10px 24px;

@@ -25,7 +25,6 @@ class ChatController extends Controller
             'conversation_id' => 'nullable|exists:conversations,id'
         ]);
 
-
         $userMessage = $request->input('message');
         $timestamp = Carbon::now();
 
@@ -131,7 +130,7 @@ class ChatController extends Controller
             ];
 
             // Effectuer la requête HTTP vers OpenRouter
-            $response = Http::timeout(30)
+            $response = Http::timeout(300)
                 ->withHeaders([
                     'Content-Type' => 'application/json',
                     'Authorization' => 'Bearer ' . $apiKey,

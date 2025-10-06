@@ -31,7 +31,7 @@ Route::get('/about', [ViewController::class, 'index'])->name('about');
 Route::get('/chat/{id}', [ViewController::class, 'show'])->name('chat.show');
 Route::post('/theme/toggle', [ViewController::class, 'toggle'])->name('theme.toggle');
 
-Route::post('/chat/send', [ViewController::class, 'send'])->name('chat.send');
+// Route::post('/chat/send', [ViewController::class, 'send'])->name('chat.send');
 
 Route::post('/logout', [ViewController::class, 'logout'])->name('logout');
 
