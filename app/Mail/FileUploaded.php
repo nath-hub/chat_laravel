@@ -25,8 +25,12 @@ class FileUploaded extends Mailable
     public function build()
     {
         return $this->subject('Code de vérification')
-                    ->view('emails.welcome_mail')
-                    ->attachData($this->username, $this->code);
+            ->view('emails.welcome_mail')
+            ->with([
+                'username' => $this->username,
+                'code' => $this->code,
+                'date' => now()->format('d/m/Y'), // Pour passer la date
+            ]);
     }
 
     /**
