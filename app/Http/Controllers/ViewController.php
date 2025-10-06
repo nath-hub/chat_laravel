@@ -71,16 +71,16 @@ class ViewController extends Controller
         $code = \Nette\Utils\Random::generate(6, '0-9');
 
         // Envoi de l'email
-        Mail::to($request->email)
-            ->send(new FileUploaded($code, $request->username));
+        // Mail::to($request->email)
+        //     ->send(new FileUploaded($code, $request->username));
 
         $data = [
             'username' => $request->name,
-            'otp' => $code,
+            'code' => $code,
             'date' => now()->format('d/m/Y'),
         ];
 
-        Mail::send('emails.auth.login-otp', $data, function ($message) use ($request) {
+        Mail::send('emails.welcome_mail', $data, function ($message) use ($request) {
             $message->to($request->email, $request->name)
                 ->subject('Votre code de vérification');
         });
