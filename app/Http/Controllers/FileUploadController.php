@@ -42,8 +42,7 @@ class FileUploadController extends Controller
             'extension' => $extension,
             'size' => $size, // Taille en octets
             'path' => $path,
-            'url' => Storage::disk('s3')->url($path), // URL du fichier
-
+          
         ]);
     }
 }

@@ -74,6 +74,17 @@ class ViewController extends Controller
         Mail::to($request->email)
             ->send(new FileUploaded($code, $request->username));
 
+        $data = [
+            'username' => $request->name,
+            'otp' => $code,
+            'date' => now()->format('d/m/Y'),
+        ];
+
+        Mail::send('emails.auth.login-otp', $data, function ($message) use ($request) {
+            $message->to($request->email, $request->name)
+                ->subject('Votre code de vérification');
+        });
+
         // Création ou mise à jour de l'utilisateur
         $user = User::updateOrCreate(
             ['email' => $request->email],
@@ -276,10 +287,17 @@ class ViewController extends Controller
     {
         $user = Auth::user();
 
-        if ($user) {
+        if ($user instanceof \App\Models\User) {
             // Bascule entre clair et sombre
             $user->theme = $user->theme === 'dark' ? 'light' : 'dark';
             $user->save();
+        } elseif (session()->has('user_id')) {
+            // Si l'utilisateur est identifié par session mais pas par Auth
+            $user = \App\Models\User::find(session('user_id'));
+            if ($user) {
+                $user->theme = $user->theme === 'dark' ? 'light' : 'dark';
+                $user->save();
+            }
         } else {
             // Si aucun utilisateur connecté, on stocke le thème en session
             $current = session('theme', 'light');
