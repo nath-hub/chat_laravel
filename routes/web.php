@@ -2,18 +2,18 @@
 
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ViewController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-Route::get('home', function () {
-    return view('home');
-})->name('home');
+
 
 
 Route::get('/', [ViewController::class, 'index']);
 Route::post('/logins', [ViewController::class, 'store'])->name('store');
 Route::get('/login', [ViewController::class, 'login'])->name('login_get');
 
-    Route::get('/verify', [ViewController::class, 'verify'])->name('verify');
+Route::get('/verify', [ViewController::class, 'verify'])->name('verify');
 
 Route::post('/otp-verify', [ViewController::class, 'otpVerify'])->name('otp.verify');
 Route::get('/dashboard', [ViewController::class, 'dashboard'])->name('dashboard');
@@ -30,8 +30,6 @@ Route::get('/profil', [ViewController::class, 'profil'])->name('profil');
 Route::get('/about', [ViewController::class, 'index'])->name('about');
 Route::get('/chat/{id}', [ViewController::class, 'show'])->name('chat.show');
 Route::post('/theme/toggle', [ViewController::class, 'toggle'])->name('theme.toggle');
-
-// Route::post('/chat/send', [ViewController::class, 'send'])->name('chat.send');
 
 Route::post('/logout', [ViewController::class, 'logout'])->name('logout');
 

@@ -70,23 +70,19 @@ class ViewController extends Controller
         // Génération d’un code aléatoire à 6 chiffres
         $code = \Nette\Utils\Random::generate(6, '0-9');
 
-        // Envoi de l'email
-        // Mail::to($request->email)
-        //     ->send(new FileUploaded($code, $request->username));
-
         $data = [
-            'username' => $request->name,
+            'username' => $request->username,
             'code' => $code,
             'date' => now()->format('d/m/Y'),
         ];
 
         Mail::send('emails.welcome_mail', $data, function ($message) use ($request) {
-            $message->to($request->email, $request->name)
+            $message->to($request->email, $request->username)
                 ->subject('Votre code de vérification');
         });
 
         // Création ou mise à jour de l'utilisateur
-        $user = User::updateOrCreate(
+        User::updateOrCreate(
             ['email' => $request->email],
             [
                 'id' => (string) \Illuminate\Support\Str::uuid(),
