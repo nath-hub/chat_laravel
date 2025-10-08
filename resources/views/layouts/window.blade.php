@@ -877,8 +877,7 @@
             const response = await fetch('{{ route('chat.send') }}', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(requestBody)
             });
