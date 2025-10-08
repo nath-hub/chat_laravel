@@ -885,6 +885,8 @@
 
             const data = await response.json();
 
+            console.log(data);
+
             // Remove loading
             loadingElement.remove();
 
@@ -903,7 +905,7 @@
             scrollToBottom();
 
         } catch (error) {
-            console.error('Erreur:', error);
+            console.error(error);
             loadingElement.remove();
 
             const errorMessage = createAssistantMessage('Erreur lors de l\'envoi du message. Veuillez réessayer.');
