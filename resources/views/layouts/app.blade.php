@@ -1,4 +1,5 @@
 {{-- resources/views/layouts/app.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -471,7 +472,7 @@
     </style>
 </head>
 
-<body data-theme="{{ $user->theme }}">
+<body data-theme="{{ $user->theme ?? 'light' }}">
 
     <!-- Bouton hamburger mobile -->
     <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">

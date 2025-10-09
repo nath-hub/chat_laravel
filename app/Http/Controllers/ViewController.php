@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Nette\Utils\Random;
 
 class ViewController extends Controller
@@ -81,8 +82,10 @@ class ViewController extends Controller
                 ->subject('Votre code de vérification');
         });
 
+
+
         // Création ou mise à jour de l'utilisateur
-        User::updateOrCreate(
+        $user = User::updateOrCreate(
             ['email' => $request->email],
             [
                 'id' => (string) \Illuminate\Support\Str::uuid(),
@@ -90,6 +93,10 @@ class ViewController extends Controller
                 'otp' => $code
             ]
         );
+
+        // Sauvegarde du code temporairement en session
+        Session::put('verification_code', $code);
+        Session::put('user_id', $user->id);
 
         $email = $request->email; // Assurez-vous que cette variable est définie
         $email = $request->email;
@@ -129,9 +136,11 @@ class ViewController extends Controller
             'otp' => 'required|string|max:6',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        // if ($user && $user->otp === $request->otp) {
+        if ($request->otp === Session::get('verification_code')) {
+            $userId = Session::get('user_id');
 
-        if ($user && $user->otp === $request->otp) {
+            $user = User::findOrFail($userId);
 
             $user->otp = null; // Invalider le code OTP après vérification
             $user->otp_expiry = null;
@@ -142,11 +151,13 @@ class ViewController extends Controller
             $user->last_connection_date = now(); // Enregistrer la date de la dernière connexion
             $user->language = 'fr'; // Définir la langue par défaut
             $user->save();
-            // Code OTP correct, connecter l'utilisateur ou effectuer une autre action
-            // Par exemple, vous pouvez créer une session pour l'utilisateur
-            session(['user_id' => $user->id]);
 
+            $connect = Auth::login($user);
 
+            Log::info($connect);
+            session(['user_id' => $userId]);
+
+            Session::forget('verification_code');
 
             return redirect()->route('home', ['user' => $user])->with('success', 'Connexion réussie !');
         } else {
@@ -175,7 +186,12 @@ class ViewController extends Controller
 
     public function home()
     {
-        $id = session('user_id');
+
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
+
+        $id = Auth::user()->id; //session('user_id');
 
         $messages = ChatMessage::where('user_id', $id)
             ->orderBy('created_at', 'asc')

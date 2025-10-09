@@ -67,7 +67,7 @@
                 <div class="cta-actions">
                     <div class="cta-content">
 
-                        <a href="{{ session('user_id') ? route('home') : route('login_get') }}" style="background-color: var(--primary-color)" class="btn-primary">
+                        <a href="{{ session('user_id') ? route('home') : route('login') }}" style="background-color: var(--primary-color)" class="btn-primary">
                             <i class="mdi mdi-chat-processing"></i>
                             Démarrer le chat
                         </a>

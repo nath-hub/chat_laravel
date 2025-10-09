@@ -10,12 +10,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [ViewController::class, 'index']);
+
+Route::middleware(['web'])->group(function () {
 Route::post('/logins', [ViewController::class, 'store'])->name('store');
-Route::get('/login', [ViewController::class, 'login'])->name('login_get');
+Route::get('/login', [ViewController::class, 'login'])->name('login');
 
 Route::get('/verify', [ViewController::class, 'verify'])->name('verify');
-
 Route::post('/otp-verify', [ViewController::class, 'otpVerify'])->name('otp.verify');
+Route::get('/home', [ViewController::class, 'home'])->name('home');
+
+});
+
+
 Route::get('/dashboard', [ViewController::class, 'dashboard'])->name('dashboard');
 
 Route::post('abonner', [ViewController::class, 'abonner'])->name('subscription.downgrade');
@@ -24,11 +30,12 @@ Route::post('cancel', [ViewController::class, 'cancel'])->name('subscription.can
 Route::post('change', [ViewController::class, 'change'])->name('subscription.change');
 
 // routes/web.php
-Route::get('/home', [ViewController::class, 'home'])->name('home');
+// Route::get('/home', [ViewController::class, 'home'])->name('home');
+
 Route::get('/abonnement', [ViewController::class, 'abonnement'])->name('abonnement');
 Route::get('/profil', [ViewController::class, 'profil'])->name('profil');
 Route::get('/about', [ViewController::class, 'index'])->name('about');
-Route::get('/chat/{id}', [ViewController::class, 'show'])->name('chat.show');
+Route::get('/chat/{id}', [ViewController::class, 'show'])->middleware('auth')->name('chat.show');
 Route::post('/theme/toggle', [ViewController::class, 'toggle'])->name('theme.toggle');
 
 Route::post('/logout', [ViewController::class, 'logout'])->name('logout');
