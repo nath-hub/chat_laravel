@@ -221,6 +221,7 @@
         margin-right: 300px;
         overflow: hidden;
         max-width: 4000px;
+        position: relative;
     }
 
     .chat-wrapper {
@@ -235,6 +236,7 @@
         border-right: 1px solid #e0e0e0;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
         overflow-y: auto;
+        padding-bottom: 120px;
     }
 
     .message-container {
@@ -251,6 +253,9 @@
         display: flex;
         flex-direction: column;
         gap: 12px;
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
     }
 
     .empty-state {
@@ -539,6 +544,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            padding-bottom: 140px;
             max-width: 1200px;
             width: 100%;
             padding: 12px;
@@ -599,6 +605,9 @@
         .chat-input {
             padding: 12px;
             gap: 10px;
+             position: sticky; /* ✅ Important sur mobile */
+        bottom: 0;
+        z-index: 10;
         }
 
         .suggestions-row {
