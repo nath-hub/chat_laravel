@@ -9,6 +9,47 @@
         transition: margin-left 0.3s ease;
     }
 
+    .message.assistant {
+        background: #f5f0ff;
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin: 10px 0;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .message.assistant h3,
+    .message.assistant h2 {
+        color: var(--primary-color);
+        margin-top: 8px;
+    }
+
+    .message.assistant table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .message.assistant th,
+    .message.assistant td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .message.assistant th {
+        background: #ede7f6;
+    }
+
+    .message.assistant ul,
+    .message.assistant ol {
+        margin-left: 1.5em;
+    }
+
+    .message.assistant p {
+        margin: 8px 0;
+    }
+
+
     /* Adaptation pour le menu rail (mode icônes) sur desktop */
     @media (min-width: 769px) {
         .navigation-drawer.rail~.main-content .app-shell {
@@ -641,7 +682,7 @@
                 @if ($msg['role'] === 'user')
                     <div class="message user">
                         <div class="bubble">
-                            <div>{!! nl2br(e($msg['message'])) !!}</div>
+                            <div>{!! $msg['message'] !!}</div>
                             <div class="meta right">{{ \Carbon\Carbon::parse($msg['created_at'])->format('H:i') }}
                             </div>
                         </div>
@@ -651,7 +692,7 @@
                     <div class="message assistant">
                         <img class="avatar" src="{{ asset('logo.jpg') }}" alt="Assistant" />
                         <div class="bubble">
-                            <div>{!! nl2br(e($msg['message'])) !!}</div>
+                            <div>{!! $msg['message'] !!}</div>
                             <div class="meta">{{ \Carbon\Carbon::parse($msg['created_at'])->format('H:i') }}</div>
                         </div>
                     </div>
@@ -900,11 +941,13 @@
             if (data.success) {
                 // Add assistant response
                 const assistantMessage = createAssistantMessage(data.response, data.timestamp);
+                assistantMessage.innerHTML = data.response;
                 container.appendChild(assistantMessage);
             } else {
                 // Add error message
-                const errorMessage = createAssistantMessage('Erreur: ' + (data.message ||
-                    'Une erreur est survenue'));
+                const errorMessage = document.createElement('div');
+                errorMessage.classList.add('message', 'error');
+                errorMessage.textContent = 'Erreur: ' + (data.message || 'Une erreur est survenue');
                 container.appendChild(errorMessage);
             }
 

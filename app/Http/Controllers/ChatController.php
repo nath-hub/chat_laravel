@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use League\CommonMark\CommonMarkConverter;
 
 class ChatController extends Controller
 {
@@ -164,16 +165,19 @@ class ChatController extends Controller
 
                 if (isset($data['choices'][0]['message']['content'])) {
 
+                    $converter = new CommonMarkConverter();
+                    $htmlResponse = $converter->convert($data['choices'][0]['message']['content'])->getContent();
+
 
                     $message = ChatMessage::create([
                         'id' => (string) \Illuminate\Support\Str::uuid(),
                         'user_id' => Auth::user()->id,
                         'role' => 'assistant',
-                        'message' => $data['choices'][0]['message']['content'],
+                        'message' => $htmlResponse,
                         'conversation_id' => $conversationId
                     ]);
 
-                    return $data['choices'][0]['message']['content'];
+                    return $htmlResponse;
                 } else {
                     Log::error('Format de réponse OpenRouter invalide', ['data' => $data]);
                     return "Je n'ai pas pu générer une réponse. Veuillez réessayer.";
