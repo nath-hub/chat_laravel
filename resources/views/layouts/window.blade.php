@@ -871,55 +871,55 @@
         }
 
         // API call
-        // try {
-        let response = await fetch('{{ route('chat.send') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(requestBody),
-            credentials: 'include'
-        });
-
-        let data;
-        const text = await response.text(); // lire une seule fois
-
         try {
-            data = JSON.parse(text); // tenter d’interpréter comme JSON
-        } catch (err) {
-            console.error('Réponse non JSON :', text); // afficher le HTML complet
-            throw err;
-        }
+            let response = await fetch('{{ route('chat.send') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(requestBody),
+                credentials: 'include'
+            });
+
+            let data;
+            const text = await response.text(); // lire une seule fois
+
+            try {
+                data = JSON.parse(text); // tenter d’interpréter comme JSON
+            } catch (err) {
+                console.error('Réponse non JSON :', text); // afficher le HTML complet
+                throw err;
+            }
 
 
-        // Remove loading
-        loadingElement.remove();
+            // Remove loading
+            loadingElement.remove();
 
-        if (data.success) {
-            // Add assistant response
-            const assistantMessage = createAssistantMessage(data.response, data.timestamp);
-            container.appendChild(assistantMessage);
-        } else {
-            // Add error message
-            const errorMessage = createAssistantMessage('Erreur: ' + (data.message ||
-                'Une erreur est survenue'));
+            if (data.success) {
+                // Add assistant response
+                const assistantMessage = createAssistantMessage(data.response, data.timestamp);
+                container.appendChild(assistantMessage);
+            } else {
+                // Add error message
+                const errorMessage = createAssistantMessage('Erreur: ' + (data.message ||
+                    'Une erreur est survenue'));
+                container.appendChild(errorMessage);
+            }
+
+            // Scroll to bottom after assistant message
+            scrollToBottom();
+
+        } catch (error) {
+            console.error(error);
+            loadingElement.remove();
+
+            const errorMessage = createAssistantMessage('Erreur lors de l\'envoi du message. Veuillez réessayer.');
             container.appendChild(errorMessage);
+
+            // Scroll to bottom after error message
+            scrollToBottom();
         }
-
-        // Scroll to bottom after assistant message
-        scrollToBottom();
-
-        // } catch (error) {
-        //     console.error(error);
-        //     loadingElement.remove();
-
-        //     const errorMessage = createAssistantMessage('Erreur lors de l\'envoi du message. Veuillez réessayer.');
-        //     container.appendChild(errorMessage);
-
-        //     // Scroll to bottom after error message
-        //     scrollToBottom();
-        // }
     }
 </script>
