@@ -108,7 +108,7 @@ class ChatController extends Controller
             $apiMessages = [
                 [
                     'role' => 'system',
-                    'content' => 'Tu es un assistant juridique spécialisé dans le droit camerounais. Réponds uniquement aux questions liées au droit. Si une question sort du domaine du droit, dis poliment que tu ne peux répondre qu\'aux questions juridiques. Sois clair, précis et professionnel dans tes réponses.'
+                    'content' => 'Tu es un assistant juridique spécialisé dans le droit. Réponds uniquement aux questions liées au droit. Si une question sort du domaine du droit, dis poliment que tu ne peux répondre qu\'aux questions juridiques. Sois clair, précis et professionnel dans tes réponses.'
                 ]
             ];
 
