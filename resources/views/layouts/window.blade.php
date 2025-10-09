@@ -247,14 +247,14 @@
     }
 
     .chat-input {
-        background-color: #ffffff;
+        background-color: var(--background-color);
         border-top: 1px solid #e0e0e0;
         padding: 16px;
         display: flex;
         flex-direction: column;
         gap: 12px;
         position: sticky;
-        bottom: 0;
+
         z-index: 10;
     }
 
@@ -593,7 +593,7 @@
             padding: 14px;
             gap: 10px;
             position: sticky;
-            bottom: 0;
+            margin-bottom: 40px;
             z-index: 10;
         }
 
@@ -703,15 +703,16 @@
         .avatar {
             width: 28px;
             height: 28px;
-            margin: 0 6px;
+            margin: 0 4px;
         }
 
         .chat-input {
             padding: 12px;
             gap: 10px;
-             position: sticky; /* ✅ Important sur mobile */
-        bottom: 0;
-        z-index: 10;
+            position: sticky;
+            /* ✅ Important sur mobile */
+            margin-bottom: 40px;
+            z-index: 10;
         }
 
         .suggestions-row {
@@ -871,7 +872,6 @@
         </div>
 
         <div class="chat-input">
-
 
             @if (count($messages ?? []) < 0)
                 <div class="suggestions-row">
