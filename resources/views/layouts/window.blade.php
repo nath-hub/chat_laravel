@@ -758,14 +758,18 @@
         </div>
 
         <div class="chat-input">
-            <div class="suggestions-row">
-                @foreach ($suggestions ?? [] as $suggestion)
-                    <button class="suggestion-btn" onclick="pickSuggestion(this.getAttribute('data-question'))"
-                        data-question="{{ $suggestion['text'] }}" title="{{ $suggestion['text'] }}">
-                        {{ $suggestion['short'] }}
-                    </button>
-                @endforeach
-            </div>
+
+
+            @if (count($messages ?? []) < 0)
+                <div class="suggestions-row">
+                    @foreach ($suggestions ?? [] as $suggestion)
+                        <button class="suggestion-btn" onclick="pickSuggestion(this.getAttribute('data-question'))"
+                            data-question="{{ $suggestion['text'] }}" title="{{ $suggestion['text'] }}">
+                            {{ $suggestion['short'] }}
+                        </button>
+                    @endforeach
+                </div>
+            @endif
 
             <div class="input-row">
                 <textarea id="chatTextarea" placeholder="Écris ta question juridique..." onkeydown="handleEnter(event)"></textarea>
