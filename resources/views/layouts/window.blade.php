@@ -883,11 +883,12 @@
         });
 
         let data;
+        const text = await response.text(); // lire une seule fois
 
         try {
-            data = await response.json();
+            data = JSON.parse(text); // tenter d’interpréter comme JSON
         } catch (err) {
-            console.error('Réponse non JSON :', await response.text());
+            console.error('Réponse non JSON :', text); // afficher le HTML complet
             throw err;
         }
 
