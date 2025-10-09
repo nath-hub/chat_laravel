@@ -871,7 +871,7 @@
         }
 
         // API call
-        try {
+        // try {
             const response = await fetch('{{ route('chat.send') }}', {
                 method: 'POST',
                 headers: {
@@ -879,7 +879,7 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 body: JSON.stringify(requestBody),
-                credentials: 'include'
+                credentials: 'same-origin'
             });
 
             const data = await response.json();
@@ -903,15 +903,15 @@
             // Scroll to bottom after assistant message
             scrollToBottom();
 
-        } catch (error) {
-            console.error(error);
-            loadingElement.remove();
+        // } catch (error) {
+        //     console.error(error);
+        //     loadingElement.remove();
 
-            const errorMessage = createAssistantMessage('Erreur lors de l\'envoi du message. Veuillez réessayer.');
-            container.appendChild(errorMessage);
+        //     const errorMessage = createAssistantMessage('Erreur lors de l\'envoi du message. Veuillez réessayer.');
+        //     container.appendChild(errorMessage);
 
-            // Scroll to bottom after error message
-            scrollToBottom();
-        }
+        //     // Scroll to bottom after error message
+        //     scrollToBottom();
+        // }
     }
 </script>
