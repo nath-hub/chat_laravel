@@ -450,7 +450,7 @@
             flex-direction: column;
             max-width: 1200px;
             width: 100%;
-             padding: 12px;
+            padding: 12px;
             margin: 0 auto;
             background-color: var(--background-color);
             border-left: 1px solid #e0e0e0;
@@ -872,36 +872,42 @@
 
         // API call
         // try {
-            const response = await fetch('{{ route('chat.send') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify(requestBody),
-                credentials: 'same-origin'
-            });
+        let response = await fetch('{{ route('chat.send') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify(requestBody),
+            credentials: 'include'
+        });
 
-            const data = await response.json();
+        let data;
 
-            console.log(data);
+        try {
+            data = await response.json();
+        } catch (err) {
+            console.error('Réponse non JSON :', await response.text());
+            throw err;
+        }
 
-            // Remove loading
-            loadingElement.remove();
 
-            if (data.success) {
-                // Add assistant response
-                const assistantMessage = createAssistantMessage(data.response, data.timestamp);
-                container.appendChild(assistantMessage);
-            } else {
-                // Add error message
-                const errorMessage = createAssistantMessage('Erreur: ' + (data.message ||
-                    'Une erreur est survenue'));
-                container.appendChild(errorMessage);
-            }
+        // Remove loading
+        loadingElement.remove();
 
-            // Scroll to bottom after assistant message
-            scrollToBottom();
+        if (data.success) {
+            // Add assistant response
+            const assistantMessage = createAssistantMessage(data.response, data.timestamp);
+            container.appendChild(assistantMessage);
+        } else {
+            // Add error message
+            const errorMessage = createAssistantMessage('Erreur: ' + (data.message ||
+                'Une erreur est survenue'));
+            container.appendChild(errorMessage);
+        }
+
+        // Scroll to bottom after assistant message
+        scrollToBottom();
 
         // } catch (error) {
         //     console.error(error);

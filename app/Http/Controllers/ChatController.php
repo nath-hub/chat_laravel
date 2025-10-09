@@ -26,8 +26,12 @@ class ChatController extends Controller
             'conversation_id' => 'nullable|exists:conversations,id'
         ]);
 
+        Log::info("la requettes arrive ici");
+
         $userMessage = $request->input('message');
         $timestamp = Carbon::now();
+
+        Log::info("voici les messages");
 
         $user = Auth::user();
 
@@ -156,7 +160,7 @@ class ChatController extends Controller
 
                     $message = ChatMessage::create([
                         'id' => (string) \Illuminate\Support\Str::uuid(),
-                        'user_id' => session('user_id'),
+                        'user_id' => Auth::user()->id,
                         'role' => 'assistant',
                         'message' => $data['choices'][0]['message']['content'],
                         'conversation_id' => $conversationId
