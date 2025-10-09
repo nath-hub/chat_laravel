@@ -7,6 +7,7 @@ use App\Models\Conversation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -28,10 +29,12 @@ class ChatController extends Controller
         $userMessage = $request->input('message');
         $timestamp = Carbon::now();
 
+        $user = Auth::user();
+
         if ($request->conversation_id) {
             $conversationId = $request->conversation_id;
         } else {
-            $lastConversation = Conversation::where('user_id', session('user_id'))->latest()->first();
+            $lastConversation = Conversation::where('user_id',  $user->id)->latest()->first();
 
             if ($lastConversation) {
                 $conversationId = $lastConversation->id;
@@ -39,7 +42,7 @@ class ChatController extends Controller
                 $conversationId = (string) Str::uuid();
                 Conversation::create([
                     'id' => $conversationId,
-                    'user_id' => session('user_id'),
+                    'user_id' => $user->id,
                     'title' => substr($userMessage, 0, 50)
                 ]);
             }
@@ -48,7 +51,7 @@ class ChatController extends Controller
 
         $message = ChatMessage::create([
             'id' => (string) \Illuminate\Support\Str::uuid(),
-            'user_id' => session('user_id'),
+            'user_id' => $user->id,
             'role' => 'user',
             'message' => $request->message,
             'conversation_id' => $conversationId
