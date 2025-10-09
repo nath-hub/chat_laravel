@@ -863,10 +863,13 @@
                 @endif
 
             @empty
-                <div class="empty-state">
-                    <i class="mdi mdi-message-text-outline"></i>
-                    <p>Aucun message pour le moment</p>
-                    <p class="text-muted">Posez votre première question juridique</p>
+                <div class="message assistant">
+                    <img class="avatar" src="{{ asset('logo.jpg') }}" alt="Assistant" />
+                    <div class="bubble">
+                        <div> Je suis Legal Chat IA un assistant juridique spécialisé dans le droit. Pose moi une
+                            question dans domaine du droit, Sois clair, précis et professionnel dans tes réponses.</div>
+                        <div class="meta">{{ \Carbon\Carbon::now()->format('H:i') }}</div>
+                    </div>
                 </div>
             @endforelse
         </div>
