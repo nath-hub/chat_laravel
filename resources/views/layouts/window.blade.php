@@ -520,6 +520,110 @@
         }
     }
 
+
+
+    /* Tablette (769px - 1024px) - Même comportement que mobile */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .app-shell {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        .app-bar {
+            left: 0;
+            right: 0;
+            padding: 0 16px;
+            height: 75px;
+        }
+
+        .chat-area {
+            margin-top: 75px;
+            margin-right: 0;
+        }
+
+        .chat-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 140px;
+            max-width: 100%;
+            width: 100%;
+            padding: 16px;
+            margin: 0 auto;
+            background-color: var(--background-color);
+            border-left: none;
+            border-right: none;
+            box-shadow: none;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .header {
+            padding-left: 8px;
+            padding-top: 8px;
+            gap: 12px;
+        }
+
+        .header-logo .logo-img {
+            width: 60px;
+            height: 60px;
+            border-width: 2px;
+        }
+
+        .header-text h3 {
+            font-size: 1.2rem;
+        }
+
+        .header-text p {
+            font-size: 0.85rem;
+        }
+
+        .bubble {
+            max-width: 80%;
+            padding: 12px;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            margin: 0 6px;
+        }
+
+        .chat-input {
+            padding: 14px;
+            gap: 10px;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+
+        .suggestions-row {
+            gap: 8px;
+        }
+
+        .suggestion-btn {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        #chatTextarea {
+            min-height: 54px;
+            font-size: 14px;
+            padding: 10px;
+        }
+
+        .send-button {
+            width: 54px;
+            height: 54px;
+            font-size: 22px;
+        }
+
+        .ml-12 {
+            margin-left: 10px;
+        }
+    }
+
+
     /* Responsive Mobile (≤ 768px) */
     @media (max-width: 768px) {
         .app-shell {
