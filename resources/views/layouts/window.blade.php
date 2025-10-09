@@ -711,7 +711,7 @@
             gap: 10px;
             position: sticky;
             /* ✅ Important sur mobile */
-            margin-bottom: 10%;
+            margin-bottom: 15%;
             z-index: 10;
         }
 
