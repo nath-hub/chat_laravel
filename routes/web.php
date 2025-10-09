@@ -40,8 +40,11 @@ Route::post('/theme/toggle', [ViewController::class, 'toggle'])->name('theme.tog
 
 Route::post('/logout', [ViewController::class, 'logout'])->name('logout');
 
-// Envoi de message (appelé par JavaScript)
-Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('/chat/send', [ChatController::class, 'send'])->name('chat.send');
+});
+
 
 // Bonus
 Route::post('/chat/clear', [ChatController::class, 'clearHistory'])->name('chat.clear');

@@ -836,8 +836,6 @@
 
         const container = document.querySelector('.chat-wrapper');
 
-
-
         // Remove empty state if present
         const emptyState = container.querySelector('.empty-state');
         if (emptyState) {
@@ -880,7 +878,8 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify(requestBody)
+                body: JSON.stringify(requestBody),
+                credentials: 'include'
             });
 
             const data = await response.json();
