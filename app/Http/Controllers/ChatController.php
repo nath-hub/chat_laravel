@@ -20,6 +20,13 @@ class ChatController extends Controller
      */
     public function send(Request $request)
     {
+
+        if (!Auth::check()) {
+            Log::warning('Utilisateur non authentifié dans send()');
+            return response()->json(['success' => false, 'message' => 'Non authentifié'], 401);
+        }
+
+
         // Validation
         $request->validate([
             'message' => 'required|string|max:5000',
@@ -38,7 +45,7 @@ class ChatController extends Controller
         if ($request->conversation_id) {
             $conversationId = $request->conversation_id;
         } else {
-            $lastConversation = Conversation::where('user_id',  $user->id)->latest()->first();
+            $lastConversation = Conversation::where('user_id', $user->id)->latest()->first();
 
             if ($lastConversation) {
                 $conversationId = $lastConversation->id;

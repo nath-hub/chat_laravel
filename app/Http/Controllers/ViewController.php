@@ -166,23 +166,6 @@ class ViewController extends Controller
     }
 
 
-    public function send(Request $request)
-    {
-        $request->validate([
-            'message' => 'required|string',
-            'conversation_id' => 'nullable|exists:conversations,id'
-        ]);
-
-        $message = ChatMessage::create([
-            'id' => (string) \Illuminate\Support\Str::uuid(),
-            'user_id' => session('user_id'),
-            'role' => 'user',
-            'message' => $request->message,
-            'conversation_id' => $request->conversation_id
-        ]);
-
-        return redirect()->back();
-    }
 
     public function home()
     {
