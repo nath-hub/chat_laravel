@@ -9,44 +9,94 @@
         transition: margin-left 0.3s ease;
     }
 
-    .message.assistant {
-        background: #f5f0ff;
-        border-radius: 10px;
-        padding: 12px 16px;
-        margin: 10px 0;
-        color: #333;
+
+    /* 🌟 Style du contenu généré par l'assistant */
+    .message.assistant .bubble {
         line-height: 1.6;
+        font-size: 0.95rem;
+        color: #2c2c2c;
     }
 
-    .message.assistant h3,
-    .message.assistant h2 {
+    /* Paragraphes */
+    .message.assistant .bubble p {
+        margin-bottom: 0.8em;
+    }
+
+    /* Titres */
+    .message.assistant .bubble h1,
+    .message.assistant .bubble h2,
+    .message.assistant .bubble h3 {
         color: var(--primary-color);
-        margin-top: 8px;
+        /* Violet principal */
+        font-weight: 700;
+        margin: 1em 0 0.5em;
+        line-height: 1.3;
     }
 
-    .message.assistant table {
-        width: 100%;
+    .message.assistant .bubble h1 {
+        font-size: 1.4rem;
+        border-bottom: 2px solid #e0c6f5;
+        padding-bottom: 0.3em;
+    }
+
+    .message.assistant .bubble h2 {
+        font-size: 1.25rem;
+    }
+
+    .message.assistant .bubble h3 {
+        font-size: 1.1rem;
+    }
+
+    /* Listes */
+    .message.assistant .bubble ul,
+    .message.assistant .bubble ol {
+        padding-left: 1.2em;
+        margin-bottom: 0.8em;
+    }
+
+    .message.assistant .bubble li {
+        margin-bottom: 0.4em;
+    }
+
+    /* Tableaux */
+    .message.assistant .bubble table {
         border-collapse: collapse;
-        margin-top: 10px;
+        width: 100%;
+        margin: 1em 0;
+        font-size: 0.9rem;
+        /* background-color: #faf8fc; */
+        border-radius: 8px;
+        overflow: hidden;
     }
 
-    .message.assistant th,
-    .message.assistant td {
-        border: 1px solid #ddd;
-        padding: 8px;
+    .message.assistant .bubble th {
+        /* background-color: #f3e6fa; */
+        color: var(--primary-color);
+        font-weight: 600;
+        text-align: left;
     }
 
-    .message.assistant th {
-        background: #ede7f6;
+    .message.assistant .bubble th,
+    .message.assistant .bubble td {
+        /* border: 1px solid #d6bce8; */
+        padding: 8px 10px;
     }
 
-    .message.assistant ul,
-    .message.assistant ol {
-        margin-left: 1.5em;
+    /* Séparateurs (<hr>) */
+    .message.assistant .bubble hr {
+        border: none;
+        border-top: 1px solid #d8c2f0;
+        margin: 1.2em 0;
     }
 
-    .message.assistant p {
-        margin: 8px 0;
+    /* Liens */
+    .message.assistant .bubble a {
+        color: #6a0dad;
+        text-decoration: underline;
+    }
+
+    .message.assistant .bubble a:hover {
+        color: #4a0072;
     }
 
 
